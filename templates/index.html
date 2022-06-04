@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>{{heading}}</title>
+    <meta name="description" content="Group Monitor">
+    <meta name="author" content="Christian Wichmann">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+</head>
+
+<style>
+    body {
+        margin: 2em;
+    }
+    a {
+        color: inherit; 
+    }
+    .nametag {
+        font-size: xx-large;
+        font-family: 'Courier New', Courier, monospace;
+        text-shadow: 2px 2px 3px;
+    }
+</style>
+
+<body>
+    <figure id="logo" style="position:absolute; left: 1em; top: 1em;" class="image is-128x128">
+        <img src="{{url_for('static', filename='images/logo.png')}}">
+    </figure>
+    <div class="container">
+        {% if notification %}
+        <div class="notification is-primary m-2">
+            {{notification}}
+        </div>
+        {% endif %}
+        <div class="content">
+            {{content|safe}}
+        </div>
+    </div>
+</body>
+
+</html>
