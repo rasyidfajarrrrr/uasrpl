@@ -4,7 +4,7 @@ Simple web app to manage groups and show participants on monitors.
 ## Usage
 Install all requirements before first use:
 
-    pip install flask faker
+    pip install flask faker Flask-HTTPAuth
 
 To start the web app with the internal web server of Flask:
 
@@ -16,4 +16,5 @@ Or run the Python script directly:
 
 ## Requirements
 * flask
+* Flask-HTTPAuth
 * faker

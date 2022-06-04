@@ -5,6 +5,8 @@ group_monitor - Simple web app to manage groups and show participants on monitor
 """
 
 from flask import Flask, redirect, render_template, abort, request, url_for
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_httpauth import HTTPBasicAuth
 
 from faker import Faker
 
@@ -14,6 +16,7 @@ fake = Faker(locale='de_DE')
 
 # initialize HTTP server
 app = Flask(__name__)
+auth = HTTPBasicAuth()
 
 
 # global list containing all participants for all groups
@@ -39,17 +42,17 @@ def build_group_form(groups, fake_names=False):
         content += f"""<div class="group-block">
             <h2 class="subtitle"><a href="{url_for('monitor', no=i)}" class="button is-primary">Gruppe {i+1}</a></h2>
             <div class="field-group">
-            <div class="field is-inline-block-desktop ml-6">
+            <div class="field is-inline-block-desktop ml-4">
             <label class="label" for="group{i}-name1">Name 1</label>
-            <div class="control"><input class="input is-primary is-one-quarter" type="text" name="group{i}-name1" id="group{i}-name1" value="{fake.name() if fake_names else g[0]}"/></div>
+            <div class="control"><input class="input is-primary is-one-quarter" type="text" name="group{i}-name1" id="group{i}-name1" size="40" value="{fake.name() if fake_names else g[0]}"/></div>
             </div>
-            <div class="field is-inline-block-desktop ml-6">
+            <div class="field is-inline-block-desktop ml-4">
             <label class="label" for="group{i}-name2">Name 2</label>
-            <div class="control"><input class="input is-primary is-one-quarter" type="text" name="group{i}-name2" id="group{i}-name2" value="{fake.name() if fake_names else g[1]}"/></div>
+            <div class="control"><input class="input is-primary is-one-quarter" type="text" name="group{i}-name2" id="group{i}-name2" size="40" value="{fake.name() if fake_names else g[1]}"/></div>
             </div>
-            <div class="field is-inline-block-desktop ml-6">
+            <div class="field is-inline-block-desktop ml-4">
             <label class="label" for="group{i}-name3">Name 3</label>
-            <div class="control"><input class="input is-primary is-one-quarter" type="text" name="group{i}-name3" id="group{i}-name3" value="{fake.name() if fake_names else g[2]}"/></div>
+            <div class="control"><input class="input is-primary is-one-quarter" type="text" name="group{i}-name3" id="group{i}-name3" size="40" value="{fake.name() if fake_names else g[2]}"/></div>
             </div>
         </div>
         """
@@ -77,7 +80,15 @@ def monitor(no):
         return render_template('index.html', heading=f'Fehlerhafte Gruppennummer', content=f'Gruppe {no} gibt es nicht!', notification='')
 
 
+@auth.verify_password
+def verify_password(username, password):
+    if check_password_hash(generate_password_hash('1234'), password):
+        return username
+    return None
+
+
 @app.route('/groups', methods=['GET', 'POST'])
+@auth.login_required
 def add():
     global groups
     if request.method == 'GET':
