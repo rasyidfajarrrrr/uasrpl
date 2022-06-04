@@ -1,7 +1,5 @@
-
 """
 group_monitor - Simple web app to manage groups and show participants on monitors.
-
 """
 
 from flask import Flask, redirect, render_template, abort, request, url_for
@@ -21,7 +19,7 @@ auth = HTTPBasicAuth()
 
 # global list containing all participants for all groups
 GROUP_COUNT = 6
-groups = [('', '', '') for i in range(GROUP_COUNT)]
+groups = [('', '', '') for _ in range(GROUP_COUNT)]
 
 
 @app.route('/', methods=['GET'])
@@ -33,14 +31,15 @@ def start():
         notification = 'Einträge wurden gespeichert!'
     if 'cleared' in request.args:
         notification = 'Einträge wurden gelöscht!'
-    return render_template('index.html', heading='Gruppen-Monitor', content=build_group_form(groups, fake_names=fake_names), notification=notification)
+    return render_template('index.html', heading='Gruppen-Monitor',
+                           content=build_group_form(groups, fake_names=fake_names), notification=notification)
 
 
-def build_group_form(groups, fake_names=False):
+def build_group_form(group_list, fake_names=False):
     content = '<h1 class="title"><a href="/">Gruppen-Monitor</a></h1><form action="/groups" method="POST">'
-    for i, g in enumerate(groups):
+    for i, g in enumerate(group_list):
         content += f"""<div class="group-block">
-            <h2 class="subtitle"><a href="{url_for('monitor', no=i)}" class="button is-primary">Gruppe {i+1}</a></h2>
+            <h2 class="subtitle"><a href="{url_for('monitor', no=i)}" class="button is-primary">Gruppe {i + 1}</a></h2>
             <div class="field-group">
             <div class="field is-inline-block-desktop ml-4">
             <label class="label" for="group{i}-name1">Name 1</label>
@@ -64,10 +63,10 @@ def build_group_form(groups, fake_names=False):
 def monitor(no):
     global groups
     try:
-        content = f"""<section class="hero is-primary is-large mt-6">
+        content = f"""<section class="hero is-primary is-medium mt-6">
             <div class="hero-body">
                 <p class="title is-size-1">
-                    Gruppenmitglieder Gruppe {no+1}
+                    Gruppenmitglieder Gruppe {no + 1}
                 </p>
                 <p class="subtitle">
                     {''.join(['<div class="box nametag">{}</div>'.format(n) for n in groups[no] if n])}
@@ -75,9 +74,10 @@ def monitor(no):
             </div>
             </section>
         """
-        return render_template('index.html', heading=f'Gruppe Nr. {no+1}', content=content, notification='')
-    except:
-        return render_template('index.html', heading=f'Fehlerhafte Gruppennummer', content=f'Gruppe {no} gibt es nicht!', notification='')
+        return render_template('index.html', heading=f'Gruppe Nr. {no + 1}', content=content, notification='', refresh=True)
+    except IndexError:
+        return render_template('index.html', heading=f'Fehlerhafte Gruppennummer',
+                               content=f'Gruppe {no} gibt es nicht!', notification='')
 
 
 @auth.verify_password
@@ -99,8 +99,8 @@ def add():
                 <div class="content">{}</div>
             </div></div>"""
         content = '<h1 class="title">Gruppen</h1>' + \
-            '\n'.join([group_block_html.format(i+1, ', '.join([n for n in g]))
-                      for i, g in enumerate(groups)])
+                  '\n'.join([group_block_html.format(i + 1, ', '.join([n for n in g]))
+                             for i, g in enumerate(groups)])
         return render_template('index.html', notification='', content=content)
     elif request.method == 'POST':
         groups.clear()
@@ -115,7 +115,7 @@ def add():
 @app.route('/groups/clear')
 def clear():
     global groups
-    groups = [('', '', '') for i in range(GROUP_COUNT)]
+    groups = [('', '', '') for _ in range(GROUP_COUNT)]
     return redirect(url_for('start', cleared=True))
 
 

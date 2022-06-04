@@ -6,6 +6,14 @@
     <title>{{heading}}</title>
     <meta name="description" content="Group Monitor">
     <meta name="author" content="Christian Wichmann">
+    {% if refresh %}
+    <meta http-equiv="refresh" content="10">
+    <script>
+        setTimeout(function () {
+            location.reload();
+        }, 5000);
+    </script>
+    {% endif %}
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
@@ -15,18 +23,26 @@
     body {
         margin: 2em;
     }
+
     a {
-        color: inherit; 
+        color: inherit;
     }
+
     .nametag {
         font-size: xx-large;
         font-family: 'Courier New', Courier, monospace;
         text-shadow: 2px 2px 3px;
     }
+
+    #logo {
+        position: absolute;
+        left: 1em;
+        top: 1em;
+    }
 </style>
 
 <body>
-    <figure id="logo" style="position:absolute; left: 1em; top: 1em;" class="image is-128x128">
+    <figure id="logo" class="image is-128x128">
         <img src="{{url_for('static', filename='images/logo.png')}}">
     </figure>
     <div class="container">
