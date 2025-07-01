@@ -1,0 +1,139 @@
+{
+  "id": "0ab63564-e697-4bfd-bd28-75bc33d5dae4",
+  "version": "2.0",
+  "name": "uasrpl",
+  "url": "https://jubilant-engine-97q6x7rjpw7qhx97r-5000.app.github.dev",
+  "tests": [{
+    "id": "c21ce195-53fd-48b6-b896-1c880c75d8ce",
+    "name": "uasRPL",
+    "commands": [{
+      "id": "aa9afb95-d1da-4f71-9b7f-1a26695b2032",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e00a8a4a-183c-4a09-8853-9ed61a5fb857",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1550x830",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "6b4974fe-37c6-4690-851a-f6ff94cdcf5f",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-primary",
+      "targets": [
+        ["css=.btn-primary", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Continue')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "7e93915f-5eb2-4433-8a81-8b0313a908d9",
+      "comment": "",
+      "command": "click",
+      "target": "id=group0-name1",
+      "targets": [
+        ["id=group0-name1", "id"],
+        ["name=group0-name1", "name"],
+        ["css=#group0-name1", "css:finder"],
+        ["xpath=//input[@id='group0-name1']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "08f173c6-10a0-4553-91de-007ffc9d3f87",
+      "comment": "",
+      "command": "type",
+      "target": "id=group0-name1",
+      "targets": [
+        ["id=group0-name1", "id"],
+        ["name=group0-name1", "name"],
+        ["css=#group0-name1", "css:finder"],
+        ["xpath=//input[@id='group0-name1']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "rasyid"
+    }, {
+      "id": "2ee1b63b-2884-48c3-8273-89e41b09baf5",
+      "comment": "",
+      "command": "click",
+      "target": "id=group0-name2",
+      "targets": [
+        ["id=group0-name2", "id"],
+        ["name=group0-name2", "name"],
+        ["css=#group0-name2", "css:finder"],
+        ["xpath=//input[@id='group0-name2']", "xpath:attributes"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b60acb6a-e06f-47ed-8381-fb987e889d6b",
+      "comment": "",
+      "command": "type",
+      "target": "id=group0-name2",
+      "targets": [
+        ["id=group0-name2", "id"],
+        ["name=group0-name2", "name"],
+        ["css=#group0-name2", "css:finder"],
+        ["xpath=//input[@id='group0-name2']", "xpath:attributes"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": "fajar"
+    }, {
+      "id": "639d6c19-62fd-44c0-91e0-5fbe3069ac4e",
+      "comment": "",
+      "command": "click",
+      "target": "id=group0-name3",
+      "targets": [
+        ["id=group0-name3", "id"],
+        ["name=group0-name3", "name"],
+        ["css=#group0-name3", "css:finder"],
+        ["xpath=//input[@id='group0-name3']", "xpath:attributes"],
+        ["xpath=//div[3]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7f14c052-3eca-4fd4-9432-df6af88b96f9",
+      "comment": "",
+      "command": "type",
+      "target": "id=group0-name3",
+      "targets": [
+        ["id=group0-name3", "id"],
+        ["name=group0-name3", "name"],
+        ["css=#group0-name3", "css:finder"],
+        ["xpath=//input[@id='group0-name3']", "xpath:attributes"],
+        ["xpath=//div[3]/div/input", "xpath:position"]
+      ],
+      "value": "pastika"
+    }, {
+      "id": "c971f9e6-8fea-4289-b244-aaecf5f9ac35",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Gruppe 1",
+      "targets": [
+        ["linkText=Gruppe 1", "linkText"],
+        ["css=.group-block:nth-child(1) > .subtitle > .button", "css:finder"],
+        ["xpath=//a[contains(text(),'Gruppe 1')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/monitor/0')]", "xpath:href"],
+        ["xpath=//h2/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Gruppe 1')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "eeef7b38-70d1-402e-b875-a8dea7d9fe7d",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["c21ce195-53fd-48b6-b896-1c880c75d8ce"]
+  }],
+  "urls": ["https://jubilant-engine-97q6x7rjpw7qhx97r-5000.app.github.dev/"],
+  "plugins": []
+}
