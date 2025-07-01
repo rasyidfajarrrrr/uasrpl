@@ -28,11 +28,14 @@ def start():
     fake_names = True if 'fake' in request.args else False
     notification = ''
     if 'success' in request.args:
-        notification = 'Einträge wurden gespeichert!'
+        notification = '✅ Einträge wurden gespeichert!'
     if 'cleared' in request.args:
-        notification = 'Einträge wurden gelöscht!'
+        notification = '🧹 Einträge wurden gelöscht!'
+    if 'error' in request.args and request.args.get('error') == 'empty':
+        notification = '⚠️ Keine Eingaben gefunden! Bitte fülle mindestens ein Feld aus.'
     return render_template('index.html', heading='Gruppen-Monitor',
                            content=build_group_form(groups, fake_names=fake_names), notification=notification)
+
 
 
 def build_group_form(group_list, fake_names=False):
@@ -102,14 +105,28 @@ def add():
                   '\n'.join([group_block_html.format(i + 1, ', '.join([n for n in g]))
                              for i, g in enumerate(groups)])
         return render_template('index.html', notification='', content=content)
+    
     elif request.method == 'POST':
-        groups.clear()
+        new_groups = []
+        any_filled = False
         for i in range(GROUP_COUNT):
-            groups.append((request.form.get(f'group{i}-name1'), request.form.get(
-                f'group{i}-name2'), request.form.get(f'group{i}-name3')))
-        return redirect(url_for('start', success=True))
+            name1 = request.form.get(f'group{i}-name1', '').strip()
+            name2 = request.form.get(f'group{i}-name2', '').strip()
+            name3 = request.form.get(f'group{i}-name3', '').strip()
+            new_groups.append((name1, name2, name3))
+            if name1 or name2 or name3:
+                any_filled = True
+
+        if any_filled:
+            groups.clear()
+            groups.extend(new_groups)
+            return redirect(url_for('start', success=True))
+        else:
+            return redirect(url_for('start', error='empty'))
+
     else:
         return abort(404)
+
 
 
 @app.route('/groups/clear')
